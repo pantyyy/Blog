@@ -11,7 +11,7 @@
 	<form id="loginForm" action="login.action" method="post">
 		登录名:<input type="text" name="login_name" />
 		密码:<input type="password" name="pass_word" />
-		<input type="submit" value="登录" />
+		<input type="submit" value="确定登录" />
 	</form>
 </body>
 </html>
