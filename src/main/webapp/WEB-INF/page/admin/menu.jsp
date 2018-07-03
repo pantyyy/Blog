@@ -22,17 +22,11 @@
 					<li class="menu-item">
 						<!-- 跳转到分类的Jsp页面 -->
 						<a href="${pageContext.request.contextPath}/admin/types.action"><span class="icon-bar-chart"></span>分类管理<i class="icon-keyboard_arrow_left"></i></a>
-						
-						<ul>
-							<li><a href="javascript:;">柱形图</a></li>
-							<li><a href="javascript:;">折线图</a></li>
-							<li><a href="javascript:;">饼图</a></li>
-						</ul>
 					</li>
 					<li class="menu-item">
 						<a href="javascript:;"><span class="icon-flask"></span>文章管理<i class="icon-keyboard_arrow_left"></i></a>
 						<ul>
-							<li><a href="javascript:;">单选框</a></li>
+							<li><a href="${pageContext.request.contextPath}/admin/articles.action">文章列表</a></li>
 							<li><a href="javascript:;">复选框</a></li>
 							<li><a href="javascript:;">按钮</a></li>
 						</ul>

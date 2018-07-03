@@ -14,26 +14,33 @@
 	</select>
 
 	<insert id="insertType">
-	INSERT INTO type_info
-	<trim prefix="(" suffix=")" suffixOverrides=",">
-		<if test="sort!=null and sort!=''">sort,</if>
-		<if test="name!=null and name!=''">name,</if>
-	</trim>
-	<trim prefix="values (" suffix=")" suffixOverrides=",">
-		<if test="sort!=null and sort!=''">#{sort},</if>
-		<if test="name!=null and name!=''">#{name},</if>
-	</trim>
+		INSERT INTO type_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="sort!=null and sort!=''">sort,</if>
+			<if test="name!=null and name!=''">name,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="sort!=null and sort!=''">#{sort},</if>
+			<if test="name!=null and name!=''">#{name},</if>
+		</trim>
 	</insert>
 	
 	<update id="updateType">
-	UPDATE type_info
-	<set>
-		<if test="sort!=null">sort=#{sort},</if>
-		<if test="name!=null">name=#{name},</if>
-	</set>
-	WHERE id = #{id}
+		UPDATE type_info
+		<set>
+			<if test="sort!=null">sort=#{sort},</if>
+			<if test="name!=null">name=#{name},</if>
+		</set>
+		WHERE id = #{id}
 	</update>
 	
+	
+	<delete id="deleteTypes">
+		DELETE FROM type_info WHERE id IN
+		<foreach collection="idArr" index="index" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
 	
 	
 </mapper>

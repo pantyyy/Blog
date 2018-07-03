@@ -52,7 +52,7 @@ public class TypeInfoAction {
 	}
 	
 	/**
-	 * 
+	 * 保存分类
 	 */
 	@RequestMapping("saveTypes.json")
 	@ResponseBody
@@ -66,4 +66,24 @@ public class TypeInfoAction {
 		
 		return Result.success();
 	}
+	
+	
+	
+	/**
+	 * 删除分类
+	 */
+	@RequestMapping("deleteTypes.json")
+	@ResponseBody
+	public Result deleteTypes(
+			@RequestParam(value="idArr") String[] idArr	//接受ajax传递过来的参数
+			){
+		
+		typeInfoService.deleteTypes(idArr);
+		
+		return Result.success();
+	}
+	
+	
+	
+	
 }

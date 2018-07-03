@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.javaex.blog.dao.article_info.ArticleInfoDao">
+	<!-- sql查询结果和java实体类的映射关系 -->
+	<resultMap id="ArticleInfoMap" type="cn.javaex.blog.view.Article">
+		<result column="id" property="id"  />
+		<result column="title" property="title" />
+		<result column="content" property="content" />
+		<result column="content_text" property="contentText"  />
+		<result column="cover" property="cover" />
+		<result column="view_count" property="viewCount" />
+		<result column="update_time" property="updateTime"  />
+		<result column="status" property="status" />
+		<result column="type_id" property="typeId" />
+	</resultMap>
+	
+	<!-- 查询所有的分类 -->
+	<select id="selectAllArticle" resultMap="ArticleInfoMap">
+		select * from article_info order by update_time
+	</select>
+	
+	<!-- 根据id查询文章 -->
+	<select id="selectArticleById" resultMap="ArticleInfoMap">
+		select * from article_info where id = {#articleId#}
+	</select>
+</mapper>

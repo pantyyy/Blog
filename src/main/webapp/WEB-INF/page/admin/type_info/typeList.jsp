@@ -1,7 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -45,14 +42,14 @@
 						<div class="operation-wrap">
 							<div class="buttons-wrap">
 								<button id="add" class="button blue"><span class="icon-plus"></span> 添加</button>
-								<button class="button red"><span class="icon-minus"></span> 删除</button>
+								<button id="delete" class="button red"><span class="icon-minus"></span> 删除</button>
 								<button id="save" class="button green"><span class="icon-check2"></span> 保存</button>
 							</div>
 						</div>
 						<table id="table" class="table color2">
 							<thead>
 								<tr>
-									<th class="checkbox"><input type="checkbox" class="fill listen-1" /> </th>
+									<th class="checkbox"><input type="checkbox" class="fill listen-1" /> <br /> </th>
 									<th>显示排序</th>
 									<th>名称</th>
 								</tr>
@@ -82,6 +79,56 @@
 	var nameArr = new Array();
 
 
+	//删除分类
+	$("#delete").click(function(){
+		idArr = [] //清空数组
+		$(':checkbox[name="id"]:checked').each(function(){	//遍历所有被勾选的复选框
+			var id = $(this).val();	//获取当前的复选框的值
+			if(id != ""){	//判断是否为空 , 为空就是添加的 , 不为空就是已有的
+				idArr.push(id);	//是已有的 , 放入idArr数组
+			}
+		});
+		
+		if(idArr.length == 0){
+			//前台无刷新去除
+			$(':checkbox[name="id"]:checked').each(function(){
+				$(this).parent().parent().parent().remove();	//删除tr
+			});
+		}else{
+			//后台数据库删除
+			$.ajax({	//ajax请求发送到后台
+				url : "/blog/admin/deleteTypes.json" ,
+				type : "POST" ,
+				dataType : "json" ,
+				traditional : "true" , //开启数组支持
+				data : {	//传递到后台的数据
+					"idArr" : idArr 
+				} , 
+				success : function(rtn){	//执行成功的回调函数
+					//console.log(rtn);
+					if(rtn.code == "000000"){	//判断后台的状态码 , 成功
+						javaex.optTip({	//弹窗提示操作成功
+							content : rtn.message,
+							type : "success"
+						});
+					
+						setTimeout(function(){	//通过定时器刷新页面
+							window.location.reload();
+						} , 2000);
+					}else{	//失败
+						javaex.optTip({	//弹窗提示操作成功
+							content : "操作失败",
+							type : "error"
+						});
+					}
+
+				}
+			});
+		}
+		
+	});
+	
+	
 	//添加分类
 	$("#add").click(function(){
 		var html = '';

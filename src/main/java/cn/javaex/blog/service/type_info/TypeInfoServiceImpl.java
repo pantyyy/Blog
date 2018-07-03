@@ -36,4 +36,9 @@ public class TypeInfoServiceImpl implements TypeInfoService {
 		}
 	}
 
+	public void deleteTypes(String[] idArr) {
+		// TODO Auto-generated method stub
+		typeInfoDao.deleteTypes(idArr);
+	}
+
 }
