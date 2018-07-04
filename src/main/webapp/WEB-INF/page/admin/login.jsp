@@ -110,7 +110,7 @@
 			success : function(data){
 				//alert(rtn);
 				if(data.code == 000000){
-					window.location.href = "http://localhost:8080/blog/admin/index.action";
+					window.location.href = "${pageContext.request.contextPath}/admin/index.action";
 				}else{
 					addErrorMsg("login_name" , data.message);
 				}

@@ -44,21 +44,14 @@
 									</div>
 									
 
-									
 									<!--下拉选择框-->
 									<div class="unit">
 										<div class="left"><p class="subtitle">所属分类</p></div>
 										<div class="right">
-											<select id="type_id">
-												<c:foreach items="${typeList }" var="typeInfo" varStatus="status">
-													<option value="${ typeInfo.id}">大专</option>
-												</c:foreach>
-<!-- 												<option value="">请选择</option>
-												<option value="1">大专</option>
-												<option value="2">本科</option>
-												<option value="3">硕士</option>
-												<option value="4">博士</option>
-												<option value="5">博士后</option> -->
+											<select id="type_id" >
+												<c:forEach items="${typeList}" var="typeInfo" varStatus="status">
+													<option value="${typeInfo.id}">${typeInfo.name}</option>
+												</c:forEach>
 											</select>
 										</div>
 										<!--清浮动-->
@@ -132,21 +125,23 @@
 
 javaex.upload({
 	type : "image",
-	url : "${pageContext.request.contextPath}/upload/upload.json",	// 请求路径
+	url : "${pageContext.request.contextPath}/admin/upload.json",	// 请求路径
 	id : "upload",	// <input type="file" />的id
 	param : "file",			// 参数名称，SSM中与MultipartFile的参数名保持一致
 	dataType : "url",		// 返回的数据类型：base64 或 url
 	callback : function (rtn) {
 		// 后台返回的数据
 		console.log(rtn);
-//		if (rtn.code=="000000") {
-//			$("#container img").attr("src", "/pic/"+rtn.data.imgUrl);
-//		} else {
-//			javaex.optTip({
-//				content : rtn.message,
-//				type : "error"
-//			});
-//		}
+		
+		if (rtn.code=="000000") {
+			$("#container img").attr("src", "/upload/"+rtn.data.imgUrl);
+		} else {
+			javaex.optTip({
+				content : rtn.message,
+				type : "error"
+			});
+		}
+
 	}
 });
 

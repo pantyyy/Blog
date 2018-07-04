@@ -39,4 +39,13 @@
 	<!-- 全局异常处理  自定义实现spring的全局异常解析器HandlerExceptionResolver -->
     <bean id="exceptionResolver" class="cn.javaex.blog.exception.BlogExceptionResolver"></bean>
     
+    
+    <!-- 文件上传 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">   
+       <!-- 设置默认的编码 -->
+       <property name="defaultEncoding" value="UTF-8"></property>
+       <!-- 上传文件总的大小最大为5M -->
+       <property name="maxUploadSize" value="5242440"></property> 
+	</bean> 
+    
 </beans>

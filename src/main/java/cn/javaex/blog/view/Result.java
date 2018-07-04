@@ -57,4 +57,10 @@ public class Result {
 		}
 		return result;
 	}
+	
+	public Result add(String key, String value) {
+		// TODO Auto-generated method stub
+		data.put(key, value);
+		return this;
+	}
 }	
