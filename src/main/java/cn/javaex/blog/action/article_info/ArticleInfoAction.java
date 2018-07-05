@@ -62,6 +62,36 @@ public class ArticleInfoAction {
 	}
 	
 	
+	/**
+	 * 保存文章
+	 */
+	@RequestMapping("saveArticle.json")
+	@ResponseBody
+	public Result saveArticle(Article article){
+		
+		//日期类型转字符串类型
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String currentDate = sdf.format(date);
+		
+		article.setUpdateTime(currentDate);
+		article.setStatus(1);
+		article.setViewCount("1");
+		article.setContentText("ce");
+		
+		if(StringUtils.isEmpty(article.getId())){
+			//如果是空 , 就是新增
+			articleInfoService.insertArticle(article);
+		}else{
+			//如果不为空 , 就是更新
+			articleInfoService.updateArticle(article);
+		}
+		
+		
+		return Result.success();
+	}
+	
+	
 	
 	
 	/**
@@ -71,14 +101,12 @@ public class ArticleInfoAction {
 	@RequestMapping("upload.json")
 	@ResponseBody
 	public Result upload(MultipartFile file, HttpServletRequest request) throws IOException {
-		
 		// 文件原名称
 		String szFileName = file.getOriginalFilename();
 		// 重命名后的文件名称
 		String szNewFileName = "";
 		// 根据日期自动创建3级目录
 		String szDateFolder = "";
-		
 		// 上传文件
 		if (file!=null && szFileName!=null && szFileName.length()>0) {
 			Date date = new Date();
@@ -90,7 +118,6 @@ public class ArticleInfoAction {
 			if (!f.exists()) {
 				f.mkdirs();
 			}
-			
 			// 新的文件名称
 			szNewFileName = UUID.randomUUID() + szFileName.substring(szFileName.lastIndexOf("."));
 			// 新文件
@@ -99,7 +126,6 @@ public class ArticleInfoAction {
 			// 将内存中的数据写入磁盘
 			file.transferTo(newFile);
 		}
-		
 		return Result.success().add("imgUrl", szDateFolder+"/"+szNewFileName);
 	}
 	

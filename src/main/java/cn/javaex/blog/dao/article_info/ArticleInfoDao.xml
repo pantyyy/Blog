@@ -12,6 +12,7 @@
 		<result column="update_time" property="updateTime"  />
 		<result column="status" property="status" />
 		<result column="type_id" property="typeId" />
+		<result column="typeName" property="typeName" />
 	</resultMap>
 	
 	<!-- 查询所有的分类 -->
@@ -21,6 +22,63 @@
 	
 	<!-- 根据id查询文章 -->
 	<select id="selectArticleById" resultMap="ArticleInfoMap">
-		select * from article_info where id = {#articleId#}
+		select
+			a.id , 
+			a.title,
+			a.content , 
+			a.content_text,
+			a.cover , 
+			a.view_count , 
+			a.update_time , 
+			a.status , 
+			a.type_id , 
+			b.name typeName 
+		from 
+				article_info a
+			LEFT JOIN 
+				type_info b
+			on a.type_id = b.id
+			where a.id = #{articleId}
 	</select>
+	
+	
+	<insert id="insertArticle">
+			INSERT INTO article_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="title!=null and title!=''">title,</if>
+			<if test="content!=null and content!=''">content,</if>
+			<if test="typeId!=null and typeId!=''">type_id,</if>
+			<if test="contentText!=null and contentText!=''">content_text,</if>
+			<if test="cover!=null and cover!=''">cover,</if>
+			<if test="viewCount!=null and viewCount!=''">view_count,</if>
+			<if test="updateTime!=null and updateTime!=''">update_time,</if>
+			<if test="status!=null and status!=''">status,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="title!=null and title!=''">#{title} ,</if>
+			<if test="content!=null and content!=''">#{content} ,</if>
+			<if test="typeId!=null and typeId!=''">#{typeId} ,</if>
+			<if test="contentText!=null and contentText!=''">#{contentText} ,</if>
+			<if test="cover!=null and cover!=''">#{cover} ,</if>
+			<if test="viewCount!=null and viewCount!=''">#{viewCount} ,</if>
+			<if test="updateTime!=null and updateTime!=''">#{updateTime} ,</if>
+			<if test="status!=null and status!=''">#{status} ,</if>
+		</trim>
+	</insert>
+	
+	<update id="updateArticle">
+		UPDATE article_info
+		<set>
+			<if test="title!=null and title!=''">title = #{title} ,</if>
+			<if test="content!=null and content!=''">content = #{content} ,</if>
+			<if test="typeId!=null and typeId!=''">type_id = #{typeId} ,</if>
+			<if test="contentText!=null and contentText!=''">content_text = #{contentText} ,</if>
+			<if test="cover!=null and cover!=''">cover = #{cover} ,</if>
+			<if test="viewCount!=null and viewCount!=''">view_count = #{viewCount} ,</if>
+			<if test="updateTime!=null and updateTime!=''">update_time = #{updateTime} , </if>
+			<if test="status!=null and status!=''">status = #{status} ,</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+	
 </mapper>

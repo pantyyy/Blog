@@ -10,4 +10,8 @@ public interface ArticleInfoDao {
 
 	Article selectArticleById(String articleId);
 
+	void insertArticle(Article article);
+
+	void updateArticle(Article article);
+
 }

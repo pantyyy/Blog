@@ -23,4 +23,17 @@ public class ArticleInfoServiceImpl implements ArticleInfoService {
 		return articleInfoDao.selectArticleById(articleId);
 	}
 
+	/**
+	 * 新增文章
+	 */
+	public void insertArticle(Article article) {
+		// TODO Auto-generated method stub
+		articleInfoDao.insertArticle(article);
+	}
+
+	public void updateArticle(Article article) {
+		// TODO Auto-generated method stub
+		articleInfoDao.updateArticle(article);
+	}
+
 }

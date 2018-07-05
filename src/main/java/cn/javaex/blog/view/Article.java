@@ -9,10 +9,23 @@ public class Article {
 	private String contentText;	//文章的简介
 	private String cover;	//文章的封面
 	private String viewCount;	//浏览次数
-	private Date updateTime;	//文章最后一个更新的时间
+	private String updateTime;	//文章最后一个更新的时间
 	private int status;			//文章的状态 , 1 = 正常 , 0 = 回收站
-	private int typeId;			//文章的类型
+	private int typeId;			//文章的类型id
+	private String typeName;	//文章类型的名称
 	
+	public String getTypeName() {
+		return typeName;
+	}
+	public void setTypeName(String typeName) {
+		this.typeName = typeName;
+	}
+	public String getUpdateTime() {
+		return updateTime;
+	}
+	public void setUpdateTime(String updateTime) {
+		this.updateTime = updateTime;
+	}
 	public int getTypeId() {
 		return typeId;
 	}
@@ -55,12 +68,7 @@ public class Article {
 	public void setViewCount(String viewCount) {
 		this.viewCount = viewCount;
 	}
-	public Date getUpdateTime() {
-		return updateTime;
-	}
-	public void setUpdateTime(Date updateTime) {
-		this.updateTime = updateTime;
-	}
+
 	public int getStatus() {
 		return status;
 	}

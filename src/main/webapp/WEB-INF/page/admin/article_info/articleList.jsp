@@ -59,10 +59,15 @@
 									<tr>
 										<td class="checkbox"><input type="checkbox" class="fill listen-1-2" name="id" value="${entity.id}" /> </td>
 										<td>${entity.id }</td>
-										<td>${entity.typeId }</td>
+										<td>${entity.typeName}</td>
 										<td>${entity.title }</td>
 										<td>${entity.updateTime }</td>
 										<td>${entity.viewCount }</td>
+										<td>
+											<a href="editArticle.action?articleId=${entity.id}" >
+												<botton class="button wathet"><span class="icon-mode_edit"></span>编辑</botton>
+											</a>
+										</td>
 									</tr>
 								</c:forEach>
 							</tbody>
