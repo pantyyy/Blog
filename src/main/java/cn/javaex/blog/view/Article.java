@@ -14,6 +14,22 @@ public class Article {
 	private int typeId;			//文章的类型id
 	private String typeName;	//文章类型的名称
 	
+	private String srcContent;
+	private String htmlContent;
+	
+	
+	public String getSrcContent() {
+		return srcContent;
+	}
+	public void setSrcContent(String srcContent) {
+		this.srcContent = srcContent;
+	}
+	public String getHtmlContent() {
+		return htmlContent;
+	}
+	public void setHtmlContent(String htmlContent) {
+		this.htmlContent = htmlContent;
+	}
 	public String getTypeName() {
 		return typeName;
 	}

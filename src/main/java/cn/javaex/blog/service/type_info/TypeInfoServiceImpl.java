@@ -21,7 +21,7 @@ public class TypeInfoServiceImpl implements TypeInfoService {
 	}
 
 	/**
-	 * 批量添加或更新类型
+	 * 添加或更新类型
 	 */
 	public void saveTypes(String[] idArr, String[] sortArr, String[] nameArr) {
 		// TODO Auto-generated method stub
@@ -40,5 +40,11 @@ public class TypeInfoServiceImpl implements TypeInfoService {
 		// TODO Auto-generated method stub
 		typeInfoDao.deleteTypes(idArr);
 	}
+
+	public int selectArticleCountById(String id) {
+		// TODO Auto-generated method stub
+		return typeInfoDao.selectArticleCountById(id);
+	}
+
 
 }

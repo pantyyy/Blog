@@ -52,6 +52,7 @@
 									<th class="checkbox"><input type="checkbox" class="fill listen-1" /> <br /> </th>
 									<th>显示排序</th>
 									<th>名称</th>
+									<th>文章计数</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -60,6 +61,7 @@
 										<td class="checkbox"><input type="checkbox" class="fill listen-1-2" name="id" value="${entity.id}" /> </td>
 										<td><input type="text" class="text" name="sort" data-type="正整数" error-msg="请输入正整数" value="${entity.sort }" /></td>
 										<td><input type="text" class="text" name="name" data-type="必填" placeholder="请输入分类名称" value="${entity.name }"/></td>
+										<td>${entity.typeCount }</td>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -117,7 +119,7 @@
 						} , 2000);
 					}else{	//失败
 						javaex.optTip({	//弹窗提示操作成功
-							content : "操作失败",
+							content : rtn.message,
 							type : "error"
 						});
 					}

@@ -8,4 +8,5 @@ public interface TypeInfoService {
 	List<TypeInfo> selectAllType();	//查询所有的分类
 	void saveTypes(String[] idArr,String[] sortArr,String[] nameArr);
 	void deleteTypes(String[] idArr);
+	int selectArticleCountById(String id);
 }

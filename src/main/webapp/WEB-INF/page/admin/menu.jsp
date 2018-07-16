@@ -10,7 +10,7 @@
 
 		<!--logo-->
 		<div class="logo">
-			<h1>JavaEx前端框架</h1>
+			<h1>Neo's Blog</h1>
 		</div>
 		
 		<!--左侧菜单-->
@@ -21,14 +21,18 @@
 					</li>
 					<li class="menu-item">
 						<!-- 跳转到分类的Jsp页面 -->
-						<a href="${pageContext.request.contextPath}/admin/types.action"><span class="icon-bar-chart"></span>分类管理<i class="icon-keyboard_arrow_left"></i></a>
+						<a href="javascript:;"><span class="icon-folder-o"></span>分类管理<i class="icon-keyboard_arrow_left"></i></a>
+						<ul>
+							<li><a href="${pageContext.request.contextPath}/admin/types.action">分类列表</a></li>
+						</ul>
+						
 					</li>
 					<li class="menu-item">
-						<a href="javascript:;"><span class="icon-flask"></span>文章管理<i class="icon-keyboard_arrow_left"></i></a>
+						<a href="javascript:;"><span class="icon-folder-o"></span>文章管理<i class="icon-keyboard_arrow_left"></i></a>
 						<ul>
 							<li><a href="${pageContext.request.contextPath}/admin/articles.action">文章列表</a></li>
-							<li><a href="javascript:;">复选框</a></li>
-							<li><a href="javascript:;">按钮</a></li>
+							<li><a href="${pageContext.request.contextPath}/admin/articles.action?sta=0">回收站</a></li>
+							<!-- <li><a href="javascript:;">按钮</a></li> -->
 						</ul>
 					</li>
 				</ul>

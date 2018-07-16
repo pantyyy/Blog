@@ -25,7 +25,7 @@
 					</a>
 				</li>
 				<li>
-					<a href="#">用户中心</a>
+					<a href="${pageContext.request.contextPath}/front/index.action">首页</a>
 				</li>
 			</ul>
 		</div>

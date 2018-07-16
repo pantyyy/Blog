@@ -78,6 +78,13 @@ public class TypeInfoAction {
 			@RequestParam(value="idArr") String[] idArr	//接受ajax传递过来的参数
 			){
 		
+		for(String id : idArr){
+			int count = typeInfoService.selectArticleCountById(id);
+			if(count > 0){
+				return Result.error("文章计数不为0");
+			}
+		}
+		
 		typeInfoService.deleteTypes(idArr);
 		
 		return Result.success();

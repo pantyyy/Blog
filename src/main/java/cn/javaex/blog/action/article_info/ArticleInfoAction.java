@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 
 import cn.javaex.blog.service.article_info.ArticleInfoService;
 import cn.javaex.blog.service.type_info.TypeInfoService;
@@ -32,16 +37,86 @@ public class ArticleInfoAction {
 	
 	@Autowired
 	TypeInfoService typeInfoService;
+
+	
+	@RequestMapping("editeContent.action")
+	public String editeContent(String articleId , ModelMap map){
+		Article article = articleInfoService.selectArticleById(articleId);
+		map.put("article", article);
+		return "admin/article_info/editeContent";
+	}
+	
+	
+	@RequestMapping("restoreArticle.json")
+	@ResponseBody
+	public Result restoreArticle(String[] selectList){
+		articleInfoService.restoreArticle(selectList);
+		return Result.success();		
+	}
+	
+	@RequestMapping("removeArticle.json")
+	@ResponseBody
+	public Result removeArticle(String[] selectList , String selectType){
+		articleInfoService.removeArticle(selectList , selectType);
+		return Result.success();
+	}
+	
+	
+	@RequestMapping("deleteArticle.json")
+	@ResponseBody
+	public Result deleteArticle(@RequestParam(value="selectList") String[] selectList , String sta){
+		if("0".equals(sta)){
+			//移动到回收站
+			articleInfoService.recycleArticle(selectList);
+		}else{
+			//删除文章
+			articleInfoService.deleteArticle(selectList);
+		}
+		//System.out.println(selectList);
+		return Result.success();
+	}
+	
 	/**
-	 * 跳转到所有文章的jsp页面
+	 * 跳转到文章列表的jsp页面
 	 * @return
 	 */
 	@RequestMapping("articles.action")
-	public String getAllArticle(ModelMap map){
-		List<Article> articleList = articleInfoService.selectAllArticle();
-		map.put("articleList", articleList);
-		return "admin/article_info/articleList";
+	public String getAllArticle(ModelMap map ,
+			@RequestParam(value="pageNum", defaultValue="1") int pageNum,	//当前页
+			@RequestParam(value="pageSize", defaultValue="5") int pageSize, //每页显示的条数
+			@RequestParam(required = false , value="typeId") Integer typeId,
+			@RequestParam(required = false , value="title") String title,
+			@RequestParam(required = false , value="startDate") String startDate,
+			@RequestParam(required = false , value="endDate") String endDate , 
+			@RequestParam(required = false , value = "sta" , defaultValue="1") String sta
+			){
+		Map mapQuery = new HashMap();
+		mapQuery.put("typeId", typeId);
+		mapQuery.put("title", title);
+		mapQuery.put("startDate", startDate);
+		mapQuery.put("endDate", endDate);
+		mapQuery.put("sta", sta);
+		
+		PageHelper.startPage(pageNum, pageSize);	//设置是哪一页 和每页显示的条数
+		List<Article> articleList = articleInfoService.selectAllArticle(mapQuery);	//查询出所有的数据
+		PageInfo<Article> pageInfo = new PageInfo<Article>(articleList);	//对所有的数据进行分页
+		map.put("pageInfo", pageInfo);
+		//查询所有的文章分类
+		map.put("typeList", typeInfoService.selectAllType());
+		map.put("mapQuery", mapQuery);
+		
+		if("0".equals(sta)){
+			return "admin/article_info/recycleList";
+		}else{
+			return "admin/article_info/articleList";
+		}
+
 	}
+
+	
+
+	
+	
 	
 	/**
 	 * 跳转到编辑文章的jsp页面
@@ -54,10 +129,8 @@ public class ArticleInfoAction {
 			Article article = articleInfoService.selectArticleById(articleId);
 			map.put("article", article);
 		}
-		
 		//查询所有的文章分类
 		map.put("typeList", typeInfoService.selectAllType());
-		//System.out.println(typeInfoService.selectAllType());
 		return "admin/article_info/editArticle";
 	}
 	
@@ -77,7 +150,12 @@ public class ArticleInfoAction {
 		article.setUpdateTime(currentDate);
 		article.setStatus(1);
 		article.setViewCount("1");
-		article.setContentText("ce");
+		
+		//去掉简介开头的逗号
+		if(!(StringUtils.isEmpty(article.getContentText()))){
+			article.setContentText(article.getContentText().substring(1 , article.getContentText().length()));
+		}
+		//article.setContentText("ce");
 		
 		if(StringUtils.isEmpty(article.getId())){
 			//如果是空 , 就是新增

@@ -6,11 +6,24 @@
 		<result column="id" property="id"  />
 		<result column="name" property="name" />
 		<result column="sort" property="sort" />
+		<result column="type_count" property="typeCount" />
 	</resultMap>
 	
 	<!-- 查询所有的分类 -->
 	<select id="selectAllType" resultMap="TypeInfoMap">
-		select * from type_info
+		select 
+			a.id ,
+			a.name ,
+			a.sort ,
+			case when b.type_count is null then 0 else b.type_count end type_count
+		from type_info a
+		LEFT JOIN
+		(
+			select type_id , count(1) type_count
+			from article_info
+			group by type_id
+		) b
+		on a.id = b.type_id
 	</select>
 
 	<insert id="insertType">
@@ -42,5 +55,20 @@
 		</foreach>
 	</delete>
 	
+	
+	<!-- 根据type的Id查询文章的计数 -->
+	<select id="selectArticleCountById" resultType="int">
+		select 
+			case when b.type_count is null then 0 else b.type_count end type_count
+		from type_info a
+		LEFT JOIN
+			(
+				select type_id , count(1) type_count
+				from article_info
+				group by type_id
+			) b
+			on a.id = b.type_id
+			where a.id = #{id}
+	</select>
 	
 </mapper>

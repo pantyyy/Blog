@@ -14,4 +14,6 @@ public interface TypeInfoDao {
 	void insertType(@Param("sort") String sort ,@Param("name") String name);	//插入类型
 	void updateType(@Param("id") String id ,@Param("sort") String sort ,@Param("name") String name);	//更新类型
 	void deleteTypes(@Param("idArr") String[] idArr);	//更新类型
+
+	int selectArticleCountById(String id);
 }

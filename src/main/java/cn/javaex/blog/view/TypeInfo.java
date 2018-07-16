@@ -8,6 +8,14 @@ public class TypeInfo {
 	private String id;
 	private String name;
 	private String sort;
+	private String typeCount;
+	
+	public String getTypeCount() {
+		return typeCount;
+	}
+	public void setTypeCount(String typeCount) {
+		this.typeCount = typeCount;
+	}
 	public String getId() {
 		return id;
 	}

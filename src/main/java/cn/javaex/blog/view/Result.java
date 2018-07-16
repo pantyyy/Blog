@@ -48,13 +48,7 @@ public class Result {
 	public static Result error(String msg){
 		Result result = new Result();
 		result.setCode("999999");
-		result.setMessage("操作成功!");	
-		
-		if(StringUtils.isEmpty(msg)){
-			result.setMessage("操作失败");
-		}else{
-			result.setMessage(msg);
-		}
+		result.setMessage(msg);
 		return result;
 	}
 	

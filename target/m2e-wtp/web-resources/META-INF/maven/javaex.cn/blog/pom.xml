@@ -95,8 +95,20 @@
             <version>2.5</version>
         </dependency>
         
+        <!-- 引入PageHelper分页插件 -->
+        <dependency>
+        	<groupId>com.github.pagehelper</groupId>
+        	<artifactId>pagehelper</artifactId>
+        	<version>5.1.2</version>
+        </dependency>
+        <!-- 由于分页使用了sql 解析工具,需要jsqlparser.jar -->
+        <dependency>
+	        <groupId>com.github.jsqlparser</groupId>
+			<artifactId>jsqlparser</artifactId>
+			<version>0.9.5</version>
+        </dependency>
         
-	</dependencies>
-	
+        
+    </dependencies>
 	
 </project>

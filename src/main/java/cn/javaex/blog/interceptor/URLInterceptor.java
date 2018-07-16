@@ -19,7 +19,7 @@ public class URLInterceptor implements HandlerInterceptor{
 		String url = request.getRequestURI();
 		
 		//对特殊的请求放行
-		if(url.indexOf("login") >= 0){
+		if(url.indexOf("login") >= 0 || url.indexOf("front") >= 0){
 			return true;
 		}
 		
